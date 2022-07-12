@@ -37,6 +37,18 @@ function App() {
     setTodos(updatedTodos);
   }
 
+  function editTodo(id) {
+    const updatedTodos = [...todos].map((todo) => {
+      if (todo.id === id) {
+        todo.text = editingText;
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+    setTodoEditing(null);
+    setEditingText("");
+  }
+
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
@@ -66,6 +78,7 @@ function App() {
             checked={todo.completed}
           />
           <button onClick={() => setTodoEditing(todo.id)}>Edit Todo</button>
+          <button onClick={() => editTodo(todo.id)}>Submit Edit</button>
         </div>
       ))}
     </div>
