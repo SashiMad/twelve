@@ -4,6 +4,8 @@ import "./App.css";
 function App() {
   const [todos, setTodos] = React.useState([]);
   const [todo, setTodo] = React.useState("");
+  const [todoEditing, setTodoEditing] = React.useState(null);
+  const [editingText, setEditingText] = React.useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -47,13 +49,23 @@ function App() {
       </form>
       {todos.map((todo) => (
         <div key={todo.id}>
-          <div>{todo.text}</div>
+          {todoEditing === todo.id ? (
+            <input
+              type="text"
+              onChange={(e) => setEditingText(e.target.value)}
+              value={editingText}
+            />
+          ) : (
+            <div>{todo.text}</div>
+          )}
+
           <button onClick={() => deleteTodo(todo.id)}>Delete</button>
           <input
             type="checkbox"
             onChange={() => toggleComplete(todo.id)}
             checked={todo.completed}
           />
+          <button onClick={() => setTodoEditing(todo.id)}>Edit Todo</button>
         </div>
       ))}
     </div>
