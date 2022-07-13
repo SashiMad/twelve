@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import Title from "./Title";
 
 function App() {
   const [todos, setTodos] = React.useState([]);
@@ -65,6 +66,7 @@ function App() {
 
   return (
     <div className="App">
+      <Title />
       <form onSubmit={handleSubmit}>
         <input
           type="text"
