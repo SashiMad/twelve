@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import Description from "./Description";
 import Title from "./Title";
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
   return (
     <div className="App">
       <Title />
+      <Description />
       <form onSubmit={handleSubmit}>
         <input
           type="text"
