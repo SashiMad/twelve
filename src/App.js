@@ -7,6 +7,20 @@ function App() {
   const [todoEditing, setTodoEditing] = React.useState(null);
   const [editingText, setEditingText] = React.useState("");
 
+  // React.useEffect(() => {
+  // const temporary = localStorage.getItem("todos");
+  //const loadedTodos = JSON.parse(temporary);
+
+  // if (loadedTodos) {
+  //   setTodos(loadedTodos);
+  // }
+  // }, []);
+
+  // React.useEffect(() => {
+  // const temporary = JSON.stringify(todos);
+  // localStorage.setItem("todos", temporary);
+  //}, [todos]);
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -57,6 +71,7 @@ function App() {
           onChange={(e) => setTodo(e.target.value)}
           value={todo}
         />
+
         <button type="submit">Add Todo</button>
       </form>
       {todos.map((todo) => (
