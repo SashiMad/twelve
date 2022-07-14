@@ -1,0 +1,72 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Sashi",
+      "createdAt": 1655071200,
+      "lastLoggedInAt": 1655157600
+    },
+    {
+      "id": 2,
+      "name": "Michael",
+      "createdAt": 1655081200,
+      "lastLoggedInAt": 1655257600
+    }
+  ],
+  "toDoLists": [
+    {
+      "id": 1,
+      "title": "My Todos",
+      "description": "things I need to do",
+      "authorId": 1,
+      "createdAt": 1655081201,
+      "updatedAt": 1655081201
+    },
+    {
+      "id": 2,
+      "title": "Michaels Todos",
+      "description": "things Michael needs to do",
+      "authorId": 2,
+      "createdAt": 1655081301,
+      "updatedAt": 1655081301
+    }
+  ],
+  "toDoItems": [
+    {
+      "id": 1,
+      "toDoListId": 1,
+      "description": "a thing to do",
+      "isDone": true
+    },
+    {
+      "id": 2,
+      "toDoListId": 1,
+      "description": "another thing to do",
+      "isDone": true
+    },
+    {
+      "id": 3,
+      "toDoListId": 1,
+      "description": "one more thing to do",
+      "isDone": false
+    },
+    {
+      "id": 4,
+      "toDoListId": 2,
+      "description": "a thing for Michael to do",
+      "isDone": false
+    },
+    {
+      "id": 5,
+      "toDoListId": 2,
+      "description": "another thing for Michael to do",
+      "isDone": false
+    },
+    {
+      "id": 6,
+      "toDoListId": 2,
+      "description": "one more thing for Michael to do",
+      "isDone": false
+    }
+  ]
+}
