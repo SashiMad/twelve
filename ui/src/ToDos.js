@@ -23,6 +23,9 @@ const ToDos = ({ loggedInUser }) => {
   function deleteTodo(id) {
     const updatedTodos = [...todos].filter((todo) => todo.id !== id);
 
+    fetch(`http://localhost:3001/toDoItems/${id}`, {
+      method: "DELETE",
+    });
     setTodos(updatedTodos);
   }
 

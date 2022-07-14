@@ -33,33 +33,9 @@
   ],
   "toDoItems": [
     {
-      "id": 1,
-      "toDoListId": 1,
-      "description": "a thing to do",
-      "isDone": true
-    },
-    {
-      "id": 2,
-      "toDoListId": 1,
-      "description": "another thing to do",
-      "isDone": true
-    },
-    {
       "id": 3,
       "toDoListId": 1,
       "description": "one more thing to do",
-      "isDone": false
-    },
-    {
-      "id": 4,
-      "toDoListId": 2,
-      "description": "a thing for Michael to do",
-      "isDone": false
-    },
-    {
-      "id": 5,
-      "toDoListId": 2,
-      "description": "another thing for Michael to do",
       "isDone": false
     },
     {
