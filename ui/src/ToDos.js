@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "./App.css";
+import "./ToDos.css";
 
 const fetchTodosAndUpdate = (userId, setToDos) => {
   fetch(`http://localhost:3001/toDoLists?authorId=${userId}&_embed=toDoItems`)
@@ -68,7 +69,7 @@ const ToDos = ({ loggedInUser }) => {
   function addTodo(e) {
     fetch("http://localhost:3001/toDoItems", {
       method: "POST",
-      body: JSON.stringify(e.target.value),
+      body: JSON.stringify(editingText),
     }).then((result) => {
       result.json();
     });
@@ -77,9 +78,22 @@ const ToDos = ({ loggedInUser }) => {
   return !toDoList ? (
     <>Loading your data</>
   ) : (
-    <div className="App">
-      <div>{toDoList.title}</div>
-      <div>{toDoList.description}</div>
+    <div className="Todos">
+      <div className="title">{toDoList.title}</div>
+      <div className="description">{toDoList.description}</div>
+      <div>
+        <input
+          className="todosInput"
+          type="text"
+          onChange={(e) => setTodo(e.target.value)}
+          value={todo}
+          maxLength={256}
+          placeholder="Type a todo"
+        />
+        <button type="submit" onClick={addTodo} className="btn btn-dark addBtn">
+          <strong> Add Todo</strong>
+        </button>
+      </div>
       {toDoList.toDoItems &&
         toDoList.toDoItems.map((todo) => (
           <div key={todo.id}>
@@ -90,34 +104,40 @@ const ToDos = ({ loggedInUser }) => {
                 value={editingText}
               />
             ) : (
-              <div>{todo.description}</div>
+              <div className="todoDescription">{todo.description}</div>
             )}
 
             <input
               type="checkbox"
               onChange={() => toggleComplete(todo.id)}
               checked={todo.isDone}
+              className="checkbox"
             />
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+
+            <button
+              onClick={() => deleteTodo(todo.id)}
+              className="btn btn-secondary deleteBtn"
+            >
+              Delete
+            </button>
 
             {todoEditing === todo.id ? (
-              <button onClick={() => editTodo(todo.id)}>Submit Edit</button>
+              <button
+                onClick={() => editTodo(todo.id)}
+                className="btn btn-secondary submiteditBtn"
+              >
+                Submit Edit
+              </button>
             ) : (
-              <button onClick={() => setTodoEditing(todo.id)}>Edit Todo</button>
+              <button
+                onClick={() => setTodoEditing(todo.id)}
+                className="btn btn-secondary editBtn"
+              >
+                Edit
+              </button>
             )}
           </div>
         ))}
-      <div>
-        <input
-          type="text"
-          onChange={(e) => setTodo(e.target.value)}
-          value={todo}
-          maxLength={256}
-        />
-        <button type="submit" onClick={addTodo}>
-          Add Todo
-        </button>
-      </div>
     </div>
   );
 };
