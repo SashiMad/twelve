@@ -26,6 +26,7 @@ const ToDos = ({ loggedInUser }) => {
     fetch(`http://localhost:3001/toDoItems/${id}`, {
       method: "DELETE",
     });
+
     setTodos(updatedTodos);
   }
 
@@ -53,11 +54,24 @@ const ToDos = ({ loggedInUser }) => {
       if (todo.id === id) {
         todo.text = editingText;
       }
+      fetch(`http://localhost:3001/toDoItems/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(editingText),
+      });
       return todo;
     });
     setTodos(updatedTodos);
     setTodoEditing(null);
     setEditingText("");
+  }
+
+  function addTodo(e) {
+    fetch("http://localhost:3001/toDoItems", {
+      method: "POST",
+      body: JSON.stringify(e.target.value),
+    }).then((result) => {
+      result.json();
+    });
   }
 
   return !toDoList ? (
@@ -100,7 +114,9 @@ const ToDos = ({ loggedInUser }) => {
           value={todo}
           maxLength={256}
         />
-        <button type="submit">Add Todo</button>
+        <button type="submit" onClick={addTodo}>
+          Add Todo
+        </button>
       </div>
     </div>
   );
