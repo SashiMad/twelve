@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "./App.css";
+import EditableText from "./EditableText";
 import "./ToDos.css";
 
 const fetchTodosAndUpdate = (userId, setToDos) => {
@@ -15,27 +16,25 @@ const ToDos = ({ loggedInUser }) => {
     fetchTodosAndUpdate(loggedInUser, setToDoList);
   }, [loggedInUser]);
 
-  const [todos, setTodos] = useState([]);
-
-  const [todo, setTodo] = React.useState("");
+  const [addTodoDescription, setAddTodoDescription] = React.useState("");
   const [todoEditing, setTodoEditing] = React.useState(null);
   const [editingText, setEditingText] = React.useState("");
 
-  function deleteTodo(id) {
-    const updatedTodos = [...todos].filter((todo) => todo.id !== id);
-
-    fetch(`http://localhost:3001/toDoItems/${id}`, {
-      method: "DELETE",
-    });
-
-    setTodos(updatedTodos);
-  }
+  const deleteTodo = useCallback(
+    async (id) => {
+      await fetch(`http://localhost:3001/toDoItems/${id}`, {
+        method: "DELETE",
+      });
+      fetchTodosAndUpdate(loggedInUser, setToDoList);
+    },
+    [loggedInUser]
+  );
 
   const toggleComplete = useCallback(
-    (id) => {
+    async (id) => {
       const todoToToggle = toDoList.toDoItems.find((todo) => todo.id === id);
 
-      fetch(`http://localhost:3001/toDoItems/${id}`, {
+      await fetch(`http://localhost:3001/toDoItems/${id}`, {
         method: "PATCH",
         body: JSON.stringify({
           isDone: !todoToToggle.isDone,
@@ -50,47 +49,61 @@ const ToDos = ({ loggedInUser }) => {
     [toDoList, loggedInUser]
   );
 
-  function editTodo(id) {
-    const updatedTodos = [...todos].map((todo) => {
-      if (todo.id === id) {
-        todo.text = editingText;
-      }
-      fetch(`http://localhost:3001/toDoItems/${id}`, {
-        method: "PUT",
-        body: JSON.stringify(editingText),
+  const editTodo = useCallback(
+    async (id, newDescription) => {
+      await fetch(`http://localhost:3001/toDoItems/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ description: newDescription }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
       });
-      return todo;
-    });
-    setTodos(updatedTodos);
-    setTodoEditing(null);
-    setEditingText("");
-  }
+      setTodoEditing(null);
+      setEditingText("");
+      fetchTodosAndUpdate(loggedInUser, setToDoList);
+    },
+    [loggedInUser]
+  );
 
-  function addTodo(e) {
-    fetch("http://localhost:3001/toDoItems", {
-      method: "POST",
-      body: JSON.stringify(editingText),
-    }).then((result) => {
-      result.json();
-    });
-  }
+  const addTodo = useCallback(
+    async (listId, description) => {
+      await fetch("http://localhost:3001/toDoItems", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+        body: JSON.stringify({
+          toDoListId: listId,
+          description,
+          isDone: false,
+        }),
+      });
+      fetchTodosAndUpdate(loggedInUser, setToDoList);
+      setAddTodoDescription("");
+    },
+    [loggedInUser]
+  );
 
   return !toDoList ? (
     <>Loading your data</>
   ) : (
     <div className="Todos">
-      <div className="title">{toDoList.title}</div>
-      <div className="description">{toDoList.description}</div>
+      <EditableText value={toDoList.title} />
+      <EditableText value={toDoList.description} />
       <div>
         <input
           className="todosInput"
           type="text"
-          onChange={(e) => setTodo(e.target.value)}
-          value={todo}
+          onChange={(e) => setAddTodoDescription(e.target.value)}
+          value={addTodoDescription}
           maxLength={256}
           placeholder="Type a todo"
         />
-        <button type="submit" onClick={addTodo} className="btn btn-dark addBtn">
+        <button
+          type="submit"
+          onClick={() => addTodo(toDoList.id, addTodoDescription)}
+          className="btn btn-dark addBtn"
+        >
           <strong> Add Todo</strong>
         </button>
       </div>
@@ -123,14 +136,17 @@ const ToDos = ({ loggedInUser }) => {
 
             {todoEditing === todo.id ? (
               <button
-                onClick={() => editTodo(todo.id)}
+                onClick={() => editTodo(todo.id, editingText)}
                 className="btn btn-secondary submiteditBtn"
               >
                 Submit Edit
               </button>
             ) : (
               <button
-                onClick={() => setTodoEditing(todo.id)}
+                onClick={() => {
+                  setTodoEditing(todo.id);
+                  setEditingText(todo.description);
+                }}
                 className="btn btn-secondary editBtn"
               >
                 Edit

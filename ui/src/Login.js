@@ -30,7 +30,7 @@ const Login = ({ setLoggedInUser }) => {
         onClick={() => login(username)}
         className="btn btn-dark submitBtn"
       >
-        Submit
+        <strong>Submit</strong>
       </button>
       <div className="hint">hint: try the username "Sashi"</div>
     </div>

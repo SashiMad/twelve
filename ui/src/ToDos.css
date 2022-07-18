@@ -3,7 +3,7 @@
   padding: 30px;
   border-radius: 6px;
   box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
-  margin: 40px 0;
+  margin: 40px 10px;
 }
 
 .todosInput {
@@ -12,6 +12,7 @@
   padding: 6px 4px;
   margin-right: 10px;
   margin-bottom: 20px;
+
   color: #333;
   border: 1px solid #ddd;
   background: #f9f7fe;
@@ -36,7 +37,7 @@
 }
 
 .todoDescription {
-  margin-top: 15px;
+  margin-top: 35px;
   padding: 10px;
   border-radius: 6px;
   box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
@@ -49,5 +50,17 @@
 }
 
 .deleteBtn {
-  margin: 20px;
+  margin-right: 20px;
+  position: relative;
+  margin-top: -14px;
+}
+
+.editBtn {
+  position: relative;
+  margin-top: -14px;
+}
+
+.submiteditBtn {
+  position: relative;
+  margin-top: -14px;
 }
