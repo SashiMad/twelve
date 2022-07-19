@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "./App.css";
-import EditableText from "./EditableText";
+
 import "./ToDos.css";
 
 const fetchTodosAndUpdate = (userId, setToDos) => {
@@ -88,8 +88,8 @@ const ToDos = ({ loggedInUser }) => {
     <>Loading your data</>
   ) : (
     <div className="Todos">
-      <EditableText value={toDoList.title} />
-      <EditableText value={toDoList.description} />
+      <div className="title">{toDoList.title}</div>
+      <div className="description">{toDoList.description}</div>
       <div>
         <input
           className="todosInput"

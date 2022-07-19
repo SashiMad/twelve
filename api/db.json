@@ -60,12 +60,12 @@
       "id": 11,
       "toDoListId": 1,
       "description": "meet friends",
-      "isDone": false
+      "isDone": true
     },
     {
       "toDoListId": 1,
       "description": "listen to music",
-      "isDone": false,
+      "isDone": true,
       "id": 13
     },
     {
